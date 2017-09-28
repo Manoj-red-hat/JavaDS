@@ -2,6 +2,7 @@ package com.mk;
 
 import java.util.HashSet;
 import java.util.Random;
+import java.util.TreeMap;
 import java.util.Vector;
 import java.util.stream.IntStream;
 
@@ -21,17 +22,13 @@ public class GraphDemo {
         });
         return data;
     }
-    class Vertex{
-        int data;
+    class VertexInfo{
         HashSet<Integer> edges=new HashSet<>();
-        Vertex(int value){
-            data=value;
-        }
 
         @Override
         public String toString(){
             StringBuffer sb=new StringBuffer();
-            sb.append("EDGE : "+data+":");
+            sb.append("EDGE Info: ");
             for (Integer x:edges)
                 sb.append("->"+x);
             return sb.toString();
@@ -41,9 +38,9 @@ public class GraphDemo {
         public boolean equals(Object v) {
             boolean retVal = false;
 
-            if (v instanceof Vertex){
-                Vertex ptr = (Vertex) v;
-                retVal = ptr.data == this.data;
+            if (v instanceof VertexInfo){
+                VertexInfo ptr = (VertexInfo) v;
+                retVal = ptr.edges.equals(this.edges);
             }
 
             return retVal;
@@ -52,22 +49,21 @@ public class GraphDemo {
 
     public void PrintGraph (){
         IntStream.range(0,5).forEach(x->{
-            System.out.println(graph.get(x));
+            System.out.println("Vertex with value: "+x+" ->"+graph.get(new Integer(x)));
         });
     }
-    Vector<Vertex> graph = new Vector<>();
+    TreeMap<Integer,VertexInfo> graph = new TreeMap<>();
     Vector<Pair> Edges = createRandomGraph();
     GraphDemo() {
         createRandomGraph();
         for (Pair x : Edges){
-            if (graph.contains(new Vertex((Integer)x.getFirst()))) {
-                try {
-                    graph.elementAt((Integer) x.getFirst()).edges.add((Integer) x.getSecond());
-                } catch (Exception e) {
-                    graph.add(new Vertex((Integer) x.getFirst()));
-                }
+            Integer key=(Integer)x.getFirst();
+            if (graph.containsKey(key)) {
+                graph.get(key).edges.add((Integer) x.getSecond());
             }else{
-                graph.add(new Vertex((Integer) x.getFirst()));
+                VertexInfo nodeInfo = new VertexInfo();
+                nodeInfo.edges.add( (Integer) x.getSecond());
+                graph.put((Integer) x.getFirst(),nodeInfo);
             }
         }
     }
