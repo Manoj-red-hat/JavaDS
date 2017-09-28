@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
  */
 public class GraphDemo {
 
-    Vector<Pair> createRandomGraph(){
+    Vector<Pair> createRandomGraphEdge(){
         Vector<Pair> data= new Vector<>();
         Random rnd= new Random();
         IntStream.range(1, 25).forEach(x ->  {
@@ -53,9 +53,8 @@ public class GraphDemo {
         });
     }
     TreeMap<Integer,VertexInfo> graph = new TreeMap<>();
-    Vector<Pair> Edges = createRandomGraph();
+    Vector<Pair> Edges = createRandomGraphEdge();
     GraphDemo() {
-        createRandomGraph();
         for (Pair x : Edges){
             Integer key=(Integer)x.getFirst();
             if (graph.containsKey(key)) {
