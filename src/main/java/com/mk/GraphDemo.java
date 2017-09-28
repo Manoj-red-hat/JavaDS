@@ -15,8 +15,8 @@ public class GraphDemo {
         Vector<Pair> data= new Vector<>();
         Random rnd= new Random();
         IntStream.range(1, 25).forEach(x ->  {
-            Integer a=Math.abs(rnd.nextInt()%5);
-            Integer b=Math.abs(rnd.nextInt()%5);
+            Integer a=Math.abs(rnd.nextInt()%5)+1;
+            Integer b=Math.abs(rnd.nextInt()%5)+1;
             if (a!=b)
             data.add(new Pair(a,b));
         });
@@ -48,10 +48,11 @@ public class GraphDemo {
     }
 
     public void PrintGraph (){
-        IntStream.range(0,5).forEach(x->{
+        IntStream.range(1,6).forEach(x->{
             System.out.println("Vertex with value: "+x+" ->"+graph.get(new Integer(x)));
         });
     }
+
     TreeMap<Integer,VertexInfo> graph = new TreeMap<>();
     Vector<Pair> Edges = createRandomGraphEdge();
     GraphDemo() {
@@ -66,4 +67,5 @@ public class GraphDemo {
             }
         }
     }
+
 }
